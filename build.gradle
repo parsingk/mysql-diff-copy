@@ -5,7 +5,7 @@ plugins {
 	id 'maven-publish'
 }
 
-group = 'com.lib'
+group = 'com.parsingk'
 version = '1.0.2'
 sourceCompatibility = '11'
 
@@ -21,21 +21,18 @@ repositories {
 
 publishing {
 	publications {
-		library(MavenPublication) {
+		maven(MavenPublication) {
 			from components.java
 		}
 	}
 	repositories {
 		maven {
-			url ""
-			name "GitLab"
-			credentials(HttpHeaderCredentials) {
-				name = 'Deploy-Token'
-				value = ''
+			name "gpr"
+			credentials {
+				username = System.getenv("GPR_USERNAME")
+				password = System.getenv("GPR_TOKEN")
 			}
-			authentication {
-				header(HttpHeaderAuthentication)
-			}
+			url = uri("https://maven.pkg.github.com/parsingk/${project.name}")
 		}
 	}
 }
@@ -55,7 +52,3 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
 }
-
-//tasks.named('test') {
-//	useJUnitPlatform()
-//}
