@@ -6,6 +6,7 @@ plugins {
 }
 
 group = 'io.github.parsingk'
+archivesBaseName = "mysql-diff-copy"
 version = '1.0.2'
 sourceCompatibility = '11'
 
@@ -27,12 +28,13 @@ publishing {
 	}
 	repositories {
 		maven {
-			name "gpr"
+			name "OSSRH"
 			credentials {
-				username = System.getenv("GPR_USERNAME")
-				password = System.getenv("GPR_TOKEN")
+				username = System.getenv("MAVEN_USERNAME")
+				password = System.getenv("MAVEN_PASSWORD")
 			}
-			url = uri("https://maven.pkg.github.com/parsingk/${project.name}")
+			url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+//			url = uri("https://maven.pkg.github.com/parsingk/${project.name}")
 		}
 	}
 }
