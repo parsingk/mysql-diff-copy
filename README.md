@@ -65,7 +65,12 @@ DestinationTableData getDestinationTableData(String tableName, long last, int co
   - adding columns if not exists   
   - updating columns if different
   - inserting data, updating data.   
-  - the table must have primary key.   
+  - the table must have primary key.
+
+  <span style="color:red">** IMPORTANT !**</span>   
+***The table must have primary key, when you call upsert function.***  
+***If no primary key, it will set on first column.***  
+
 
 - Response Code   
   - OK(1)   
@@ -92,8 +97,5 @@ LinkedList<TextDiffUtil.Diff> getRoutinesDiffText(String routineName);
 **https://github.com/parsingk/mysql-diff-copy/wiki/Response-Object-References**
 
 <br>
-
-<span style="color:red">* **IMPORTANT !**</span>   
-*The table must have primary key, when you call upsert function.*  
-*If no primary key, it will set on first column.*
+<br>
 
