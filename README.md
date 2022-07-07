@@ -25,14 +25,15 @@
  group_concat_max_len = 1048576
 ```   
  
-* Mysql tally Table Create
+* Mysql tally Table Create **(For only copy(`upsert` function))**
 ``` 
     CREATE TABLE `tally` (
       `id` int unsigned NOT NULL,
       PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-    tally table insert id 1 to 10000.
+    tally table insert id 1 to 100000(depends on your database table for upsert row count).
+    if your table row count is more than tally table row, it will throw exception.
 ``` 
 * Use Granted User For information_schema(select) and   
 your schema(create table, alter table, select, insert, update)
@@ -59,7 +60,7 @@ SourceTableData getSourceTableData(String tableName, long last, int count);
 DestinationTableData getDestinationTableData(String tableName, long last, int count);
 ```
 
-- Migration From source To destination.    
+- Migration From source To destination. (copy from source to destination)    
   - creating table if not exists    
   - adding columns if not exists   
   - updating columns if different
