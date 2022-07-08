@@ -46,7 +46,7 @@ public class TableDiffer {
             } else {
                 dest.set(destList.get().get(0));
                 if (!source.getColumn_hash().equals(dest.get().getColumn_hash()) || !source.getTable_rows().equals(dest.get().getTable_rows())) {
-                    table.set(table.get().setStatus(DataStatus.MODIFY.getStatus()));        // 데이터가 다른 경우
+                    table.set(table.get().setStatus(DataStatus.MODIFY.getStatus()));
                 }
             }
 
@@ -60,7 +60,7 @@ public class TableDiffer {
                 columnName = source.getColumns().get(i);
                 column = new Column().setColumn_name(columnName);
 
-                if (!destColumns.contains(columnName)) {        // 테이블 내에 같은 컬럼이 없는 경우
+                if (!destColumns.contains(columnName)) {
                     if (table.get().getStatus() == 0) {
                         table.set(table.get().setStatus(DataStatus.MODIFY.getStatus()));
                     }
@@ -167,13 +167,13 @@ public class TableDiffer {
                     columnName = sourceKeys.get(i);
 
                     if (i > destData.size() - 1) {
-                        newColumns.add(columnName); // 새로운 컬럼이 생겼을 경우
+                        newColumns.add(columnName);
                     } else {
                         destColumnName = destKeys.get(i);
                         columnData = destData.get(destColumnName);
 
                         if (!data.get(columnName).equals(columnData)) {
-                            concurrentIndex.add(index);         // destData가 sourceData와 데이터가 다른 경우 update할 데이터
+                            concurrentIndex.add(index);
                             updatedColumns.add(columnName);
                         }
                     }
@@ -256,7 +256,7 @@ public class TableDiffer {
             }
         }
 
-        primaryStr = primaryStr.substring(0, primaryStr.length() - 1);  // 마지막 , 제거
+        primaryStr = primaryStr.substring(0, primaryStr.length() - 1);
         primaryStr += ")";
 
         return isExistPrimaryKey ? primaryStr : "";

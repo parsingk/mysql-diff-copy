@@ -7,8 +7,6 @@ import java.util.List;
 @Data
 public class Table {
     private String table_name;
-
-    // 1 : new 표시, 2: modify 표시, 3: 데이터가 다른경우 점표시, 4: delete 표시
     private Integer status = 0;
     private List<Column> columns;
     private Integer deletedColumnCount = 0;

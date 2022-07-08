@@ -8,10 +8,7 @@ public class Routine {
 
     private String name;
 
-    // 1 : 프로시저, 2: 펑션
     private String type;
-
-    // 1 : new 표시, 2: modify 표시
     private Integer status = 0;
 
     public Routine setStatus(Integer status) {

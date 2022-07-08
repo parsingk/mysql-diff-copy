@@ -894,12 +894,6 @@ public class TextDiffUtil {
         }
     }
 
-    /**
-     * Look for single edits surrounded on both sides by equalities
-     * which can be shifted sideways to align the edit to a word boundary.
-     * e.g: The c<ins>at c</ins>ame. -> The <ins>cat </ins>came.
-     * @param diffs LinkedList of Diff objects.
-     */
     public void diff_cleanupSemanticLossless(LinkedList<Diff> diffs) {
         String equality1, edit, equality2;
         String commonString;
@@ -1293,14 +1287,6 @@ public class TextDiffUtil {
         }
     }
 
-    /**
-     * loc is a location in text1, compute and return the equivalent location in
-     * text2.
-     * e.g. "The cat" vs "The big cat", 1->1, 5->8
-     * @param diffs List of Diff objects.
-     * @param loc Location within text1.
-     * @return Location within text2.
-     */
     public int diff_xIndex(List<Diff> diffs, int loc) {
         int chars1 = 0;
         int chars2 = 0;
@@ -1419,14 +1405,6 @@ public class TextDiffUtil {
         return levenshtein;
     }
 
-    /**
-     * Crush the diff into an encoded string which describes the operations
-     * required to transform text1 into text2.
-     * E.g. =3\t-2\t+ing  -> Keep 3 chars, delete 2 chars, insert 'ing'.
-     * Operations are tab-separated.  Inserted text is escaped using %xx notation.
-     * @param diffs List of Diff objects.
-     * @return Delta text.
-     */
     public String diff_toDelta(List<Diff> diffs) {
         StringBuilder text = new StringBuilder();
         for (Diff aDiff : diffs) {
@@ -1794,27 +1772,11 @@ public class TextDiffUtil {
         return patch_make(text1, diffs);
     }
 
-    /**
-     * Compute a list of patches to turn text1 into text2.
-     * text2 is ignored, diffs are the delta between text1 and text2.
-     * @param text1 Old text
-     * @param text2 Ignored.
-     * @param diffs Array of Diff objects for text1 to text2.
-     * @return LinkedList of Patch objects.
-     * @deprecated Prefer patch_make(String text1, LinkedList<Diff> diffs).
-     */
     @Deprecated public LinkedList<Patch> patch_make(String text1, String text2,
                                                     LinkedList<Diff> diffs) {
         return patch_make(text1, diffs);
     }
 
-    /**
-     * Compute a list of patches to turn text1 into text2.
-     * text2 is not provided, diffs are the delta between text1 and text2.
-     * @param text1 Old text.
-     * @param diffs Array of Diff objects for text1 to text2.
-     * @return LinkedList of Patch objects.
-     */
     public LinkedList<Patch> patch_make(String text1, LinkedList<Diff> diffs) {
         if (text1 == null || diffs == null) {
             throw new IllegalArgumentException("Null inputs. (patch_make)");

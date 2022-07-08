@@ -2,12 +2,14 @@ plugins {
 	id 'org.springframework.boot' version '2.7.0'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'java-library'
 	id 'maven-publish'
+	id 'signing'
 }
 
 group = 'io.github.parsingk'
 archivesBaseName = "mysql-diff-copy"
-version = '1.0.2'
+version = '1.0.3'
 sourceCompatibility = '11'
 
 configurations {
@@ -16,27 +18,86 @@ configurations {
 	}
 }
 
+jar {
+	enabled = false
+}
+
+task javadocJar(type: Jar) {
+	archiveClassifier = 'javadoc'
+	from javadoc
+}
+
+task sourcesJar(type: Jar) {
+	archiveClassifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+artifacts {
+	archives javadocJar, sourcesJar
+}
+
 repositories {
 	mavenCentral()
 }
 
 publishing {
 	publications {
-		maven(MavenPublication) {
+		mavenJava(MavenPublication){
+
+			groupId = 'io.github.parsingk'
+			artifactId = 'mysql-diff-copy'
+			version = '1.0.3'
 			from components.java
+
+			artifact javadocJar
+			artifact sourcesJar
+
+			pom {
+				name = 'mysql-diff-copy'
+				description = 'Mysql Tables, Columns, Data, Procedures, Functions Diff & Copy'
+				url = 'https://github.com/parsingk/mysql-diff-copy'
+				inceptionYear = '2022'
+
+				licenses {
+					license {
+						name = 'Apache License 2.0'
+						url = 'https://www.apache.org/licenses/LICENSE-2.0'
+					}
+				}
+				developers {
+					developer {
+						id = 'parsingk'
+						name = 'Jongpil Park'
+						email = 'whdvlf2006@gmail.com'
+					}
+				}
+				scm {
+					connection='scm:git:git:github.com/parsingk/mysql-diff-copy.git'
+					developerConnection='scm:git:https://github.com/parsingk/mysql-diff-copy.git'
+					url='https://github.com/parsingk/mysql-diff-copy'
+				}
+			}
 		}
 	}
 	repositories {
 		maven {
-			name "OSSRH"
+			name = "ossrh"
+			url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
 			credentials {
 				username = System.getenv("MAVEN_USERNAME")
 				password = System.getenv("MAVEN_PASSWORD")
 			}
-			url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-//			url = uri("https://maven.pkg.github.com/parsingk/${project.name}")
 		}
 	}
+}
+
+ext."signing.keyId" = System.getenv('SIGN_KEY_ID')
+ext."signing.password" = System.getenv("SIGN_KEY_PASSWORD")
+ext."signing.secretKeyRingFile" = System.getenv("SIGN_KEY_FILE")
+
+signing {
+	sign configurations.archives
+	sign publishing.publications.mavenJava
 }
 
 dependencies {

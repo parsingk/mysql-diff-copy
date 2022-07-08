@@ -10,7 +10,7 @@ public interface IDatabaseDiffer {
 
     /**
      * Get All Table List
-     * @return
+     * @return Tables
      * @throws SQLException
      */
     Tables getTableList() throws SQLException;
@@ -22,7 +22,7 @@ public interface IDatabaseDiffer {
      * @param tableName
      * @param last
      * @param count
-     * @return
+     * @return SourceTableData
      */
     SourceTableData getSourceTableData(String tableName, long last, int count);
 
@@ -33,7 +33,7 @@ public interface IDatabaseDiffer {
      * @param tableName
      * @param last
      * @param count
-     * @return
+     * @return DestinationTableData
      */
     DestinationTableData getDestinationTableData(String tableName, long last, int count);
 
@@ -43,14 +43,14 @@ public interface IDatabaseDiffer {
      * creating table, adding columns, updating columns, inserting data, updating data.
      *
      * @param tableName
-     * @return
+     * @return DataMigration
      */
     DataMigration upsert(String tableName);
 
     /**
      * Get All Procedures and Functions From both of DataSources.
      *
-     * @return
+     * @return Routines
      */
     Routines getRoutines();
 
@@ -59,7 +59,7 @@ public interface IDatabaseDiffer {
      * Diff Procedure's or Function's Text.
      *
      * @param routineName
-     * @return
+     * @return LinkedList - TextDiffUtil.Diff
      */
     LinkedList<TextDiffUtil.Diff> getRoutinesDiffText(String routineName);
 }
