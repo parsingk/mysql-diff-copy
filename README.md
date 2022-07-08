@@ -1,3 +1,7 @@
+
+[Generic badge](https://img.shields.io/badge/version-1.0.3-success.svg) 
+[Generic badge](https://img.shields.io/badge/license-Apache--2.0-orange)
+
 # Mysql Data Diff & Copy
 
 * table diff and copy **(copy for only tiny table)**
